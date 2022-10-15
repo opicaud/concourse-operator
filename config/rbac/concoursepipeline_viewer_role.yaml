@@ -1,0 +1,20 @@
+# permissions for end users to view concoursepipelines.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: concoursepipeline-viewer-role
+rules:
+- apiGroups:
+  - concourse.trackclear.be
+  resources:
+  - concoursepipelines
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - concourse.trackclear.be
+  resources:
+  - concoursepipelines/status
+  verbs:
+  - get

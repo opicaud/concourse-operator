@@ -1,0 +1,24 @@
+apiVersion: concourse.trackclear.be/v1
+kind: ConcoursePipeline
+metadata:
+  name: concoursepipeline-sample
+spec:
+  concourseUrl: http://concourse.test
+  username: opicaud
+  password: opicaud
+  target: concourse
+  team: main
+  pipeline: |-
+    jobs:
+    - name: hello-world-deployed
+      plan:
+      - task: say-hello
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source: {repository: alpine}
+          run:
+            path: echo
+            args: ["Hello, world!"]
+

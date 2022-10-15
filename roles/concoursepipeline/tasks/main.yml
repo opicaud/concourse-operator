@@ -1,0 +1,22 @@
+---
+# tasks file for ConcoursePipeline
+- name: connect to concourse
+  command: 
+    cmd: /tmp/fly login -t {{ target }} -u {{ username }} -p {{ password }} -c {{ concourse_url }} -n {{ team }}
+
+- name: debug
+  debug:
+    msg: "{{ pipeline }}, {{ ansible_operator_meta.name }}"
+
+- name: parse pipeline
+  copy:
+    dest: "/tmp/{{ ansible_operator_meta.name }}.yml"
+    content: "{{ pipeline }}"
+    
+- name: set pipeline
+  command: 
+    cmd: /tmp/fly set-pipeline -t {{ target }} -p {{ ansible_operator_meta.name }}  -c /tmp/{{ ansible_operator_meta.name }}.yml -n
+
+- name: unpause pipeline
+  command:      
+    cmd: /tmp/fly unpause-pipeline -t {{ target }} -p {{ ansible_operator_meta.name }}

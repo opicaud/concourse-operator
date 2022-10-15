@@ -1,0 +1,24 @@
+# permissions for end users to edit concoursepipelines.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: concoursepipeline-editor-role
+rules:
+- apiGroups:
+  - concourse.trackclear.be
+  resources:
+  - concoursepipelines
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - concourse.trackclear.be
+  resources:
+  - concoursepipelines/status
+  verbs:
+  - get
